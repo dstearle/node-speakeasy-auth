@@ -33,7 +33,7 @@ app.post('/api/register', (req, res) => {
         db.push(path, { id, temp_secret })
 
         // The response from the server with the new user info
-        res.json({ id, secret: temp_secret })
+        res.json({ id, secret: temp_secret.base32 })
 
     }
     
