@@ -65,6 +65,42 @@ app.post('/api/verify', (req, res) => {
         // The user in the database
         const user = db.getData(path);
 
+        // Sets the temp secret to permenent
+        const { base32:secret } = user.temp_secret;
+
+        // Verifies the token against the secret
+        const verified = speakeasy.totp.verify({
+
+            secret,
+            encoding: 'base32',
+            token
+
+        });
+
+        // If the verification is successful
+        if(verified) {
+
+            // Pushes the verified user to the database
+            db.push(path, { id: userId, secret: user.temp_secret });
+
+            // The response from the server
+            res.json({ verified: true });
+
+        }
+
+        // Else the verification was unsuccessful
+        else {
+
+            res.json({ verified: false });
+
+        }
+
+    }
+
+    catch(error) {
+
+
+
     }
 
 });
