@@ -1,5 +1,9 @@
 // Imports
 const express = require('express');
+const speakeasy = require('speakeasy');
+const uuid = require('uuid');
+const { JsonDB } = require('node-json-db');
+const { Config } = require('node-json-db/dist/lib/JsonDBConfig');
 
 // Initiates express
 const app = express();
