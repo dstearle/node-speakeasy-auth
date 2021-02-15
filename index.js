@@ -51,8 +51,8 @@ app.post('/api/register', (req, res) => {
 
 });
 
-// Verify token and make secret permanent
-app.post('/api/verify', (req, res) => {
+// Validate token
+app.post('/api/validate', (req, res) => {
 
     const {token, userId} = req.body;
 
@@ -66,32 +66,33 @@ app.post('/api/verify', (req, res) => {
         const user = db.getData(path);
 
         // Sets the temp secret to permenent
-        const { base32:secret } = user.temp_secret;
+        const { base32:secret } = user.secret;
 
-        // Verifies the token against the secret
-        const verified = speakeasy.totp.verify({
+        // Validates the user's token
+        const tokenValidates = speakeasy.totp.verify({
 
             secret,
             encoding: 'base32',
-            token
+            token,
+            window: 1
 
         });
 
-        // If the verification is successful
-        if(verified) {
+        // If the validation is successful
+        if(tokenValidates) {
 
             // Pushes the verified user to the database
             db.push(path, { id: userId, secret: user.temp_secret });
 
             // The response from the server
-            res.json({ verified: true });
+            res.json({ validated: true });
 
         }
 
         // Else the verification was unsuccessful
         else {
 
-            res.json({ verified: false });
+            res.json({ validated: false });
 
         }
 
