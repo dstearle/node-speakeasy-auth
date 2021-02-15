@@ -15,4 +15,4 @@ app.get('/api', (req, res) => res.json({ message: 'Welcome to the two factor aut
 const PORT = process.env.PORT || 5000;
 
 // Runs the server
-server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
