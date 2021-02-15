@@ -4,6 +4,9 @@ const express = require('express');
 // Initiates express
 const app = express();
 
+// Routes
+app.get('/api', (req, res) => res.json({ message: 'Welcome to the two factor authentication example' }))
+
 // The port for the server
 const PORT = process.env.PORT || 5000;
 
