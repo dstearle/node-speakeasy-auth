@@ -8,6 +8,9 @@ const { Config } = require('node-json-db/dist/lib/JsonDBConfig');
 // Initiates express
 const app = express();
 
+// Middleware
+app.use(express.json());
+
 // Database
 const db = new JsonDB(new Config('myDatabase', true, false, '/'));
 
@@ -43,6 +46,24 @@ app.post('/api/register', (req, res) => {
         console.log(error);
 
         res.status(500).json({ message: 'Error generating the secret' });
+
+    }
+
+});
+
+// Verify token and make secret permanent
+app.post('/api/verify', (req, res) => {
+
+    const {token, userId} = req.body;
+
+    // If no errors then retrieve the user data
+    try {
+
+        // The path to the user's ID
+        const path = `/user/${id}`;
+
+        // The user in the database
+        const user = db.getData(path);
 
     }
 
