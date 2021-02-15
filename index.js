@@ -97,9 +97,12 @@ app.post('/api/verify', (req, res) => {
 
     }
 
+    // Else an error occurs
     catch(error) {
 
+        console.log(error);
 
+        res.status(500).json({ message: 'Error finding user' });
 
     }
 
