@@ -37,7 +37,14 @@ app.post('/api/register', (req, res) => {
 
     }
     
-    catch(error) {}
+    // If an error occurs inform the terminal and display 500 status
+    catch(error) {
+
+        console.log(error);
+
+        res.status(500).json({ message: 'Error generating the secret' });
+
+    }
 
 });
 
